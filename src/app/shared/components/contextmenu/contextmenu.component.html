@@ -1,4 +1,12 @@
-<ng-template cdkPortal #templatePortals="cdkPortal">
+<ng-template 
+  cdkConnectedOverlay
+  #overlay="cdkConnectedOverlay"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="isOpen"
+  [cdkConnectedOverlayPositions]="positions"
+  (overlayOutsideClick)="onOutsideClick($event)"
+  (detach)="hide()"
+  >
   <ul [@zoom]="'active'" class="example-list">
     <li>Item 1</li>
     <li>Item 2</li>

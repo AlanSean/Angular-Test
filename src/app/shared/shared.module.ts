@@ -8,18 +8,22 @@ import {
   IconComponent,
   ContextmenuModule,
 } from "./components/";
-import { WebviewDirective } from "./directives/";
+import { WebviewDirective } from './directives/';
 import { FormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [PageNotFoundComponent, WebviewDirective, IconComponent],
+  declarations: [
+    PageNotFoundComponent,
+    WebviewDirective,
+    IconComponent,
+  ],
   exports: [
     CommonModule,
     TranslateModule,
     WebviewDirective,
     FormsModule,
     IconComponent,
-    ContextmenuModule
+    ContextmenuModule,
   ],
 })
 export class SharedModule {}
