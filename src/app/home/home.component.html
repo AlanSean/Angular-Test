@@ -1,0 +1,21 @@
+<div 
+  (click)="showOverlay($event)" 
+  class="button"
+>
+  OverlayModule2
+</div>
+
+<div (click)="showOverlay($event)" class="button">
+  OverlayModule2
+</div>
+
+<ng-template 
+  cdkPortal
+  #templatePortals="cdkPortal"
+>
+  <ul [@zoom]="'active'" class="example-list">
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+  </ul>
+</ng-template>

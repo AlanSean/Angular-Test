@@ -1,0 +1,14 @@
+{
+  "add": "Add",
+  "save": "Save",
+  "saveOverwrite": "Save and overwrite",
+  "savenewdir": "Export to new folder",
+  "down": "Down",
+  "clean": "Clean",
+  "about": "About",
+  "defaultOutdir": "outdir",
+  "quality": "Quality",
+  "error": "Error",
+  "await": "Await",
+  "finish": "Finish"
+}
