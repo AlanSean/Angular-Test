@@ -17,7 +17,7 @@ import Cdk from "./cdk";
     //Directive
     ...Directives,
   ],
-  imports:[
+  imports: [
     CommonModule,
     TranslateModule,
     FormsModule,

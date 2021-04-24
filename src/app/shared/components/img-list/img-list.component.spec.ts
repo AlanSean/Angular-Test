@@ -37,6 +37,7 @@ describe("ImgListComponent", () => {
     store = TestBed.inject(MockStore);
     store.overrideSelector(selectFile, [
       {
+        MD5KEY:"",
         state: "finish",
         percentage: "-9.8%",
         src: "file://C:/Users/111/Desktop/copy/start.jpg",
