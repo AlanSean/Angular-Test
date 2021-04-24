@@ -1,7 +1,5 @@
 import {
   Component,
-  OnInit,
-  ViewChild,
   ViewEncapsulation,
   Directive,
   ElementRef,
@@ -15,12 +13,12 @@ import {
   ComponentFactoryResolver,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-} from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { CdkOverlayOrigin, ConnectedPosition } from '@angular/cdk/overlay';
+} from "@angular/core";
+import { animate, style, transition, trigger } from "@angular/animations";
+import { CdkOverlayOrigin, ConnectedPosition } from "@angular/cdk/overlay";
 
 @Directive({
-  selector: '[appContextmenu]',
+  selector: "[appContextmenu]",
 })
 export class ContextmenuDirective implements OnDestroy, AfterViewInit {
   component!: ContextmenuComponent;
@@ -35,7 +33,7 @@ export class ContextmenuDirective implements OnDestroy, AfterViewInit {
     private elementRef: ElementRef,
     protected resolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef
-  ) { }
+  ) {}
 
   ngAfterViewInit(): void {
     this.created();
@@ -52,12 +50,11 @@ export class ContextmenuDirective implements OnDestroy, AfterViewInit {
       this.component?.show();
     };
 
-    nativeElement.addEventListener('click', callback, false);
+    nativeElement.addEventListener("contextmenu", callback, false);
 
     this.listen = () => {
-      nativeElement.addEventListener('click', callback);
+      nativeElement.addEventListener("contextmenu", callback);
     };
-
   }
   protected created() {
     this.component = this.viewContainerRef.createComponent(
@@ -72,32 +69,32 @@ export class ContextmenuDirective implements OnDestroy, AfterViewInit {
 }
 
 @Component({
-  selector: 'app-contextmenu',
-  exportAs: 'ContextmenuComponent',
-  templateUrl: './contextmenu.component.html',
-  styleUrls: ['./contextmenu.component.less'],
+  selector: "app-contextmenu",
+  exportAs: "ContextmenuComponent",
+  templateUrl: "./contextmenu.component.html",
+  styleUrls: ["./contextmenu.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
   animations: [
-    trigger('zoom', [
-      transition('void => active', [
-        style({ opacity: 0, transform: 'scale(0.8)' }),
+    trigger("zoom", [
+      transition("void => active", [
+        style({ opacity: 0, transform: "scale(0.8)" }),
         animate(
-          '0.2s cubic-bezier(0.08, 0.82, 0.17, 1)',
+          "0.2s cubic-bezier(0.08, 0.82, 0.17, 1)",
           style({
             opacity: 1,
-            transform: 'scale(1)',
+            transform: "scale(1)",
           })
         ),
       ]),
-      transition('active => void', [
-        style({ opacity: 1, transform: 'scale(1)' }),
+      transition("active => void", [
+        style({ opacity: 1, transform: "scale(1)" }),
         animate(
-          '0.1s cubic-bezier(0.78, 0.14, 0.15, 0.86)',
+          "0.1s cubic-bezier(0.78, 0.14, 0.15, 0.86)",
           style({
             opacity: 0,
-            transform: 'scale(0.8)',
+            transform: "scale(0.8)",
           })
         ),
       ]),
@@ -109,10 +106,10 @@ export class ContextmenuComponent {
   isOpen: boolean = false;
   positions: ConnectedPosition[] = [
     {
-      originX: 'end',
-      originY: 'center',
-      overlayX: 'start',
-      overlayY: 'center',
+      originX: "end",
+      originY: "center",
+      overlayX: "start",
+      overlayY: "center",
     },
   ];
   constructor(private cdr: ChangeDetectorRef) {

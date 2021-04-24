@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import { PortalModule } from '@angular/cdk/portal';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { OverlayModule } from "@angular/cdk/overlay";
+
+import { SharedModule } from "../../shared.module";
 import {
   ContextmenuComponent,
   ContextmenuDirective,
-} from './contextmenu.component';
+} from "./contextmenu.component";
 
 // describe('ContextmenuDirective', () => {
 //   it('should create an instance', () => {
@@ -15,14 +14,14 @@ import {
 //   });
 // });
 
-describe('ContextmenuComponent', () => {
+describe("ContextmenuComponent", () => {
   let component: ContextmenuComponent;
   let fixture: ComponentFixture<ContextmenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ContextmenuDirective, ContextmenuComponent],
-      imports: [CommonModule, PortalModule, OverlayModule],
+      imports: [SharedModule, OverlayModule],
     }).compileComponents();
   });
 
@@ -32,7 +31,7 @@ describe('ContextmenuComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

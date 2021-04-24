@@ -1,29 +1,43 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
+import { FormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 
-import {
-  PageNotFoundComponent,
-  IconComponent,
-  ContextmenuModule,
-} from "./components/";
-import { WebviewDirective } from './directives/';
-import { FormsModule } from "@angular/forms";
+import Components from "./components/";
+import Directives from "./directives/";
+//ng-zorror-antd
+import ngZorro from "./ng-zorro";
+//angular-cdk
+import Cdk from "./cdk";
 
 @NgModule({
   declarations: [
-    PageNotFoundComponent,
-    WebviewDirective,
-    IconComponent,
+    //component
+    ...Components,
+    //Directive
+    ...Directives,
+  ],
+  imports:[
+    CommonModule,
+    TranslateModule,
+    FormsModule,
+    //nz-zrror
+    ...ngZorro,
+    //cdk
+    ...Cdk,
   ],
   exports: [
     CommonModule,
     TranslateModule,
-    WebviewDirective,
     FormsModule,
-    IconComponent,
-    ContextmenuModule,
+
+    //component
+    ...Components,
+    ...Directives,
+    //nz-zrror
+    ...ngZorro,
+    //cdk
+    ...Cdk,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }
