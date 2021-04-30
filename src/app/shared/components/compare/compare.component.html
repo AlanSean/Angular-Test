@@ -1,0 +1,50 @@
+<div 
+  *ngIf="isOpen" (detach)="hide()" 
+  class="compare"
+  [ngClass]="color"
+  [@zoom]="'active'">
+  <!-- 工具箱 -->
+  <div class="tools">
+    <ul>
+      <li (click)="hide()">
+        <app-icon name="icon-clear"></app-icon>
+      </li>
+      <li>
+        <app-icon name="icon-zoom-in"></app-icon>
+      </li>
+      <li class="disabled">
+        <app-icon name="icon-zoom-out"></app-icon>
+      </li>
+      <li>
+        <app-icon name="icon-rotate-right"></app-icon>
+      </li>
+      <li>
+        <app-icon name="icon-rotate-left"></app-icon>
+      </li>
+    </ul>
+  </div>
+  <div class="colors">
+    <div *ngFor="let color of colors" [class]="color" (click)="setColor(color)"></div>
+  </div>
+
+  <div class="img_continer">
+    <div class="left">
+      <img cdkDragBoundary=".left" 
+        [cdkDragFreeDragPosition]="dragPosition"
+        #left
+        (mousewheel)="mousewheel($event)"
+        [style]="styles"
+        cdkDrag src="assets/icons/favicon.512x512.png">
+    </div>
+    <div class="hr"></div>
+     <div class="right">
+      <img 
+        cdkDragBoundary=".right" 
+        #right
+        (mousewheel)="mousewheel($event)"
+        [style]="styles"
+        [cdkDragFreeDragPosition]="dragPosition"
+        cdkDrag src="assets/icons/favicon.512x512.png" alt="">
+     </div>
+  </div>
+</div>

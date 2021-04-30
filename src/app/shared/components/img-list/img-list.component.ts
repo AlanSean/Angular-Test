@@ -12,6 +12,8 @@ import { selectFile, UPDATE_STATE, REMOVE_FILE } from "@app/core/core.module";
 import { NzModalService } from "ng-zorro-antd/modal";
 import { animate, style, transition, trigger } from "@angular/animations";
 
+
+
 @Component({
   selector: "app-img-list",
   templateUrl: "./img-list.component.html",
@@ -49,46 +51,12 @@ export class ImgListComponent implements OnInit {
       state: "finish",
       MD5KEY:"",
       percentage: "-9.8%",
-      src: "file://C:/Users/111/Desktop/copy/start.jpg",
-      path: "C:/Users/111/Desktop/copy/start.jpg",
+      src: "assets/icons/favicon.512x512.png",
+      path: "assets/icons/favicon.512x512.png",
       extname: ".jpg",
       ext: "jpg",
-      outsrc:
-        "J:\\QQ几率\\2316694914\\FileRecv\\剑灵小助手1.7.7(密码为jlxzs)\\剑灵工具箱 V2.91\\剑灵工具箱 V2.91\\Resources\\HaoZip\\Loading\\start.jpg",
-      outpath:
-        "J:\\QQ几率\\2316694914\\FileRecv\\剑灵小助手1.7.7(密码为jlxzs)\\剑灵工具箱 V2.91\\剑灵工具箱 V2.91\\Resources\\HaoZip\\Loading",
-      quality: "80",
-      rawDataSize: "5.57 KB",
-      nowDataSize: "2.28 KB",
-    },
-    {
-      state: "finish",
-      MD5KEY:"",
-      percentage: "-9.8%",
-      src: "file://C:/Users/111/Desktop/copy/start.jpg",
-      path: "C:/Users/111/Desktop/copy/start.jpg",
-      extname: ".jpg",
-      ext: "jpg",
-      outsrc:
-        "J:\\QQ几率\\2316694914\\FileRecv\\剑灵小助手1.7.7(密码为jlxzs)\\剑灵工具箱 V2.91\\剑灵工具箱 V2.91\\Resources\\HaoZip\\Loading\\start.jpg",
-      outpath:
-        "J:\\QQ几率\\2316694914\\FileRecv\\剑灵小助手1.7.7(密码为jlxzs)\\剑灵工具箱 V2.91\\剑灵工具箱 V2.91\\Resources\\HaoZip\\Loading",
-      quality: "80",
-      rawDataSize: "5.57 KB",
-      nowDataSize: "2.28 KB",
-    },
-    {
-      state: "finish",
-      MD5KEY:"",
-      percentage: "-9.8%",
-      src: "file://C:/Users/111/Desktop/copy/start.jpg",
-      path: "C:/Users/111/Desktop/copy/start.jpg",
-      extname: ".jpg",
-      ext: "jpg",
-      outsrc:
-        "J:\\QQ几率\\2316694914\\FileRecv\\剑灵小助手1.7.7(密码为jlxzs)\\剑灵工具箱 V2.91\\剑灵工具箱 V2.91\\Resources\\HaoZip\\Loading\\start.jpg",
-      outpath:
-        "J:\\QQ几率\\2316694914\\FileRecv\\剑灵小助手1.7.7(密码为jlxzs)\\剑灵工具箱 V2.91\\剑灵工具箱 V2.91\\Resources\\HaoZip\\Loading",
+      outsrc:  "",
+      outpath: "",
       quality: "80",
       rawDataSize: "5.57 KB",
       nowDataSize: "2.28 KB",
