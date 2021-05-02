@@ -14,10 +14,9 @@ import {
   ChangeDetectionStrategy,
   HostListener,
   ViewChild,
+  OnDestroy,
 } from "@angular/core";
-import { animate, style, transition, trigger } from "@angular/animations";
-import { ComponentType, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 @Directive({
   selector: "[appCompare]",
@@ -36,10 +35,10 @@ export class CompareDirective implements AfterViewInit {
     private viewContainerRef: ViewContainerRef,
   ) { }
 
-  @HostListener('click') onclick(){
+  @HostListener('click') onclick() {
     this.component?.show();
   }
-  
+
   ngAfterViewInit(): void {
     this.created();
   }
@@ -48,11 +47,32 @@ export class CompareDirective implements AfterViewInit {
     this.component = this.viewContainerRef.createComponent(
       this.componentFactory
     ).instance;
-    this.component.saveOrigin(this.elementRef);
   }
 
 }
 
+function throttle(_fn: any, maxTime: number) {
+  let id: any = null;
+  let lasttime: number | null = null;
+  function cancel() {
+    window.cancelAnimationFrame(id);
+    id = null;
+  }
+  function frame(this: any, time: number, args: any) {
+    if (!lasttime) lasttime = time;
+    const lastTime = time - lasttime;
+    if (lastTime >= maxTime) {
+      _fn.apply(this, args);
+      lasttime = null;
+    }
+    cancel();
+  }
+  return function (this: any, ...args: any) {
+    id = window.requestAnimationFrame((time) => {
+      frame.apply(this, [time, args])
+    })
+  }
+}
 @Component({
   selector: 'app-compare',
   templateUrl: './compare.component.html',
@@ -82,17 +102,48 @@ export class CompareDirective implements AfterViewInit {
           })
         ),
       ]),
-    ]),
+    ])
   ],
 })
-export class CompareComponent {
-  @ViewChild('left') left!:ElementRef;
+export class CompareComponent implements OnDestroy {
+  @ViewChild('left') left!: ElementRef;
   @ViewChild('right') right!: ElementRef;
-  origin!: ElementRef;
+
   isOpen: boolean = false;
+  isTouch: 'left' | 'right' | null = null;
   color = localStorage.color || 'black';
-  styles = '';
-  dragPosition = { x: 0, y: 0 };
+  stylesMatrix = "matrix(1,0,0,1,0,0)";
+  leftdragPosition = { x: 115, y: 0 };
+  rightdragPosition = { x: -115, y: 0 };
+  current = {
+    x: 0,
+    y: 0
+  }
+  last = {
+    x: 0,
+    y: 0
+  }
+  matrix = {
+    scale: 1,
+    lastMoveScale: 1,
+    translate: {
+      x: 0,
+      y: 0
+    },
+    lastMoveTranslate: {
+      x: 0,
+      y: 0
+    },
+    scaleOrigin: {
+      x: 0,
+      y: 0
+    },
+    imgOrigin: {
+      x: 0,
+      y: 0
+    },
+    rotate: 0
+  }
   colors = [
     'black',
     'white',
@@ -104,29 +155,168 @@ export class CompareComponent {
   constructor(
     private cdr: ChangeDetectorRef
   ) { }
-  setColor(color:string){
+
+  addListen() {
+    this.removeListen();
+    document.addEventListener('mouseup', this.mouseup);
+  }
+  removeListen() {
+    document.removeEventListener('mouseup', this.mouseup);
+  }
+  setColor(color: string) {
     this.color = color;
     localStorage.color = color;
     this.cdr.detectChanges();
   }
-  saveOrigin(origin: ElementRef) {
-    //关闭检测 因为会出现警告
-    this.cdr.detach();
-    this.origin = origin;
-    this.cdr.markForCheck();
-  }
   show() {
     if (!this.isOpen) this.isOpen = true;
     this.cdr.detectChanges();
+    //动画0，2s 获取容器的中心点
+    setTimeout(() => {
+      this.reset();
+      this.addListen();
+      document.addEventListener
+    }, 210);
   }
+
   hide() {
     if (this.isOpen) this.isOpen = false;
+    this.removeListen();
+    this.cdr.detectChanges();
+  }
+  //重置坐标
+  reset() {
+    const {
+      height,
+      width,
+    } = this.left.nativeElement.getBoundingClientRect();
+    const imgOrigin = {
+      x: width / 2,
+      y: height / 2
+    }
+    this.matrix = {
+      scale: 1,
+      lastMoveScale: 1,
+      translate: {
+        x: 0,
+        y: 0
+      },
+      lastMoveTranslate: {
+        x: 0,
+        y: 0
+      },
+      scaleOrigin: {
+        x: 0,
+        y: 0
+      },
+      imgOrigin: imgOrigin,
+      rotate: 0
+    }
+    this.leftdragPosition = { x: imgOrigin.x, y: 0 };
+    this.rightdragPosition = { x: -1 * imgOrigin.x, y: 0 };
+    this.updateStyle(0, 0);
+  }
+  updateStyle(scale: number, rotate: number) {
+    const matrix = this.matrix,
+      {
+        lastMoveScale,
+        translate,
+        lastMoveTranslate,
+        scaleOrigin,
+        imgOrigin,
+      } = matrix,
+      newScale = matrix.scale + scale;
+
+    matrix.scale = newScale < 1 ? 1 : newScale;
+    matrix.rotate += rotate;
+    if (matrix.scale > 1) {
+      translate.x = lastMoveTranslate.x + (imgOrigin.x - scaleOrigin.x) * (matrix.scale - lastMoveScale);
+      translate.y = lastMoveTranslate.y + (imgOrigin.y - scaleOrigin.y) * (matrix.scale - lastMoveScale);
+    }
+
+
+    this.stylesMatrix = `matrix(${matrix.scale}, 0, 0, ${matrix.scale}, ${translate.x}, ${translate.y})`;
+
     this.cdr.detectChanges();
   }
 
+  setMatrix = throttle((e: any) => {
+    const matrix = this.matrix,
+      {
+        translate,
+        scale,
+      } = matrix,
+      {
+        height,
+        width,
+      } = this.left.nativeElement.getBoundingClientRect();
+
+    matrix.imgOrigin = {
+      x: width / 2,
+      y: height / 2
+    }
+    //鼠标在容器内移动时 记录缩放中心点
+    matrix.scaleOrigin = {
+      x: e.offsetX,
+      y: e.offsetY
+    }
+    //记录 移动时的缩放值 以及位移值。
+    matrix.lastMoveTranslate = { ...translate };
+    matrix.lastMoveScale = scale;
+  }, 100);
+  mousemove = (e: any) => {
+    this.setMatrix(e);
+    if (this.isTouch) {
+      const {
+        pageX,
+        pageY
+      } = e,
+        current = this.current,
+        leftdragPosition = this.leftdragPosition,
+        rightdragPosition = this.rightdragPosition,
+        translatex = pageX - current.x,
+        translatey = pageY - current.y;
+      if (this.isTouch == 'left') {
+        leftdragPosition.x += translatex;
+        leftdragPosition.y += translatey;
+      }
+      if (this.isTouch == 'right') {
+        rightdragPosition.x += translatex;
+        rightdragPosition.y += translatey;
+      }
+      current.x = pageX;
+      current.y = pageY;
+    }
+  }
+
+  mousedown(e: any,touchkey:'left'|'right') {
+    e.preventDefault()
+    this.isTouch = touchkey;
+    this.current = {
+      x: e.pageX,
+      y: e.pageY
+    }
+  }
+  mouseup = (e: any) => {
+    e.preventDefault();
+    this.isTouch = null;
+  }
+  mouseleave() {
+    const matrix = this.matrix;
+    matrix.scaleOrigin = {
+      ...matrix.imgOrigin
+    }
+  }
   mousewheel = (e: any) => {
-    console.log(e.deltaY);
-    this.styles = "transform: scale3d(14, 14, 1) rotate(0deg);"
+    if (e.wheelDeltaY < 0) {
+      this.updateStyle(-0.1, 0);
+    }
+    if (e.wheelDeltaY > 0) {
+      this.updateStyle(0.1, 0);
+    }
+  }
+  ngOnDestroy() {
+    this.removeListen();
   }
 
 }
