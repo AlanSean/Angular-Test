@@ -8,7 +8,7 @@ import {
   // 可用来动态创建组件的工厂的基类。resolveComponentFactory() 实例化给定类型的组件的工厂。使用生成的 ComponentFactory.create() 方法创建该类型的组件。
   ComponentFactory,
   OnDestroy,
-  AfterViewInit,
+  OnInit,
   // 一个简单的注册表，它将 Components 映射到生成的 ComponentFactory 类，该类可用于创建组件的实例。用于获取给定组件类型的工厂，然后使用工厂的 create() 方法创建该类型的组件。
   ComponentFactoryResolver,
   ChangeDetectorRef,
@@ -20,7 +20,7 @@ import { CdkOverlayOrigin, ConnectedPosition } from "@angular/cdk/overlay";
 @Directive({
   selector: "[appContextmenu]",
 })
-export class ContextmenuDirective implements OnDestroy, AfterViewInit {
+export class ContextmenuDirective implements OnDestroy, OnInit {
   component!: ContextmenuComponent;
   origin!: any;
   listen = () => {};
@@ -35,7 +35,7 @@ export class ContextmenuDirective implements OnDestroy, AfterViewInit {
     private viewContainerRef: ViewContainerRef
   ) {}
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.created();
     this.setListen();
   }
@@ -124,11 +124,7 @@ export class ContextmenuComponent {
     }
   }
   saveOrigin(origin: CdkOverlayOrigin) {
-    //关闭检测 因为会出现警告
-    this.cdr.detach();
     this.origin = origin;
-    console.log(origin);
-    // this.cdr.reattach();
     this.cdr.markForCheck();
   }
   show() {
