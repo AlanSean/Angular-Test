@@ -25,5 +25,5 @@ var either = _.curry(function(error,complete,e){
 
 
 var zoltar:UnaryFunction<string, void> = _.compose(console.log,either(identity,fortune), getAge(moment()));
-zoltar('adasd'); //
-zoltar('2005-12-12'); //If you survive, you will be NaN
+zoltar('adasd'); //Birth date could not be parsed
+zoltar('2005-12-12'); //If you survive, you will be 16

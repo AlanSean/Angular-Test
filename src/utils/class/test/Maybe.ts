@@ -37,3 +37,11 @@ var getTwenty: UnaryFunction<number, number> = _.compose(
 );
 console.log('balance: ', getTwenty(10));
 console.log('balance: ', getTwenty(100));
+
+
+var topRoute:any = _.compose(Maybe.of, _.reverse);
+
+//  bottomRoute :: String -> Maybe(String)
+var bottomRoute:any = _.compose(_.map(_.reverse), Maybe.of as any);
+console.log(topRoute('hi'));
+console.log(bottomRoute('hi'));
