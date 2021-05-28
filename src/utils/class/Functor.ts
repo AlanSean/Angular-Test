@@ -7,7 +7,7 @@ export class Functor<T>{
   static of<T>(value:T){
     return new Functor(value)
   }
-  map(f:UnaryFunction<T,any>){
+  map(f:UnaryFunction<T,T>){
     return new Functor(f(this.__value));
   }
 }

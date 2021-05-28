@@ -1,6 +1,6 @@
 import * as _ from 'ramda';
-import { Container } from '../index';
+import { Functor } from '../index';
 
-var c = Container.of<string>('bombs').map(_.concat<string>(' away'));
+var c = Functor.of<string>('bombs').map(_.concat<string>(' away'));
 
-console.log('Container', c);
+console.log('Functor', c);

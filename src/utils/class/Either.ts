@@ -1,11 +1,11 @@
-import { Functor } from "./Functor";
-import { UnaryFunction } from "./types";
+import { Functor } from './Functor';
+import { UnaryFunction } from './types';
 //容器
-export default class Left<T>  extends Functor<T>{
-  map(fn:UnaryFunction<T,T>):Left<T> {
+export class Either<T> extends Functor<T> {
+  static of<T>(value: T) {
+    return new Either(value);
+  }
+  map(fn: UnaryFunction<T, T>): Either<T> {
     return this;
   }
 }
-
-
-

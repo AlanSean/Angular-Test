@@ -1,4 +1,5 @@
 import { ZeroFunction, UnaryFunction } from './types';
+import * as _ from 'ramda';
 
 function compose<T, R>(a: UnaryFunction<T, R>,b: ZeroFunction<T>) {
   return function () {
@@ -15,7 +16,7 @@ export class IO<T>{
       return x;
     });
   }
-  map(f: ZeroFunction<T>) {
+  map(f: any) {
     return new IO(compose(f, this.unsafePerformIO));
   }
 }

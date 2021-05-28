@@ -24,10 +24,12 @@ console.log(streetName({ addresses: [{ street: 'Shady Ln.', number: 4201 }] }));
 
 console.log('-------------------------------------------');
 var withdraw = _.curry(function (amount, balance) {
+  console.log(balance >= amount ? Maybe.of(balance - amount) : Maybe.of(null))
   return balance >= amount ? Maybe.of(balance - amount) : Maybe.of(null);
 });
 
 const maybe = _.curry(function (x, f, m: Maybe<any>) {
+  console.log(m)
   return m.isNothing() ? x : f(m.__value);
 });
 
