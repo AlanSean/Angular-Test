@@ -12,9 +12,12 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { HomeModule } from './home/home.module';
+import { MapModule } from './map/map.module';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { ThreeJsModule } from './threejs/threejs.module';
+import { MatterJsModule } from './matterjs/matterjs.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -29,7 +32,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     HttpClientModule,
     SharedModule,
     HomeModule,
+    MapModule,
     CoreModule,
+    ThreeJsModule,
+    MatterJsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot({

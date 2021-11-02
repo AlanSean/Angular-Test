@@ -1,21 +1,31 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeRoutingModule } from './home/home-routing.module';
-
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
+  {
+    path: 'map',
+    pathMatch: 'full',
+    loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
+  },
+  {
+    path: 'three',
+    pathMatch: 'full',
+    loadChildren: () =>  import('./threejs/threejs.module').then((m) => m.ThreeJsModule),
+  },
+  {
+    path: 'matter',
+    pathMatch: 'full',
+    loadChildren: () =>  import('./matterjs/matterjs.module').then((m) => m.MatterJsModule),
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
-    HomeRoutingModule,
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

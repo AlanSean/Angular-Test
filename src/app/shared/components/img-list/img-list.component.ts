@@ -48,7 +48,7 @@ export class ImgListComponent implements OnInit {
   files$!: Observable<ReadonlyArray<FILE>>;
   files: nowFILE[] = [
     {
-      state: "finish",
+      state: "error",
       MD5KEY:"",
       percentage: "-9.8%",
       src: "assets/icons/favicon.512x512.png",

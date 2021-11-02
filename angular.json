@@ -27,6 +27,7 @@
             },
             "styles": [
               "node_modules/ng-zorro-antd/style/index.min.css",
+              "src/index.scss",
               "src/styles.less"
             ],
             "scripts": []
@@ -38,7 +39,7 @@
               "outputHashing": "all",
               "sourceMap": true,
               "namedChunks": false,
-              "aot": false,
+              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -53,7 +54,7 @@
               "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
+              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -133,22 +134,17 @@
               "path": "./angular.webpack.js"
             },
             "styles": [
+              "src/index.scss",
               "src/styles.less"
             ],
             "scripts": []
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "eslintConfig": ".eslintrc.json",
+            "lintFilePatterns": ["src/**.ts", "main.ts"]
           }
         },
         "e2e": {
