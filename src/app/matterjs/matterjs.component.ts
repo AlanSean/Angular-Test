@@ -26,7 +26,7 @@ export class MatterJsComponent implements AfterViewInit {
       Mouse = Matter.Mouse,
       Composite = Matter.Composite,
       Bodies = Matter.Bodies;
-    
+
     // create engine
     var engine = Engine.create(),
       world = engine.world;
@@ -40,10 +40,10 @@ export class MatterJsComponent implements AfterViewInit {
         height: 600,
         wireframes: false,
         showAngleIndicator: false,
-        showPerformance: true,
+        showPerformance: false,
         showSleeping: false,
-        showStats: true,
-        showIds: true
+        showStats: false,
+        showIds: false,
       },
     });
 
@@ -53,31 +53,39 @@ export class MatterJsComponent implements AfterViewInit {
     // create runner
     var runner = Runner.create();
     Runner.run(runner, engine);
-
     // add bodies
     var circleOptions = {
-      density: 10,
-      restitution: 0.9,
-      size: 40,
+      density: 0.001,
+      friction: 0.65,
+      frictionStatic: 0.5,
+      restitution: 0.8,
+      collisionFilter: {
+        category: 8,
+        mask: 8,
+      },
       render: {
         sprite: {
           texture: this.basketball,
-          xScale: 0.2,
-          yScale: 0.2,
+          xScale: 0.5,
+          yScale: 0.5,
         },
       },
     };
     var options = {
       isStatic: true,
+      collisionFilter: {
+        category: 4,
+        mask: 4,
+      },
     };
-    var circle = Bodies.circle(170, 450, 40, circleOptions);
+    var circle = Bodies.circle(170, 450, 25, circleOptions);
     var elastic = Constraint.create({
       pointA: { x: 170, y: 450 },
       bodyB: circle,
       stiffness: 0.05,
       render: {
-        strokeStyle: 'transparent' // 约束透明
-      }
+        strokeStyle: 'transparent', // 约束透明
+      },
     });
     var grounp = Bodies.rectangle(
         canvas.width / 2,
@@ -107,29 +115,29 @@ export class MatterJsComponent implements AfterViewInit {
         mouseConstraint.mouse.button === -1 &&
         (circle.position.x > 190 || circle.position.y < 430)
       ) {
-        var circle1 = Bodies.circle(170, 450, 30, circleOptions);
+        var newCircle = Bodies.circle(170, 450, 25, circleOptions);
+        circle.collisionFilter.category = 4;
+        circle.collisionFilter.mask = 4;
         Matter.Body.setAngularVelocity(circle, Math.PI / 7);
-        Composite.add(engine.world, circle1);
-        elastic.bodyB = circle1;
-        circle = circle1;
+        Composite.add(engine.world, newCircle);
+        elastic.bodyB = newCircle;
+        circle = newCircle;
       }
     });
-    Events.on(engine, 'collisionStart', function (e) {
-      console.log()
-      e.pairs.forEach( el => {
-        console.log(el.bodyA)
-        Matter.Body.setAngularVelocity(el.bodyA, el.bodyA.angularVelocity);
-        Matter.Body.setAngularVelocity(el.bodyB, el.bodyB.angularVelocity);
-      })
-    });
-
     var mouse = Mouse.create(render.canvas),
-        mouseConstraint = MouseConstraint.create(engine, {
-          mouse: mouse,
-        });
+      mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        collisionFilter: {
+          category: 8,
+          mask: 8,
+        },
+        constraint: {
+          render: {
+            visible: false,
+          },
+        },
+      });
     Composite.add(world, mouseConstraint);
-
-
 
     // fit the render viewport to the scene
     Render.lookAt(render, {
