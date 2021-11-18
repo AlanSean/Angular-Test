@@ -36,8 +36,8 @@ export class MatterJsComponent implements AfterViewInit {
       element: document.body,
       engine: engine,
       options: {
-        width: 800,
-        height: 600,
+        width: window.innerWidth,
+        height: window.innerHeight-100,
         wireframes: false,
         showAngleIndicator: false,
         showPerformance: false,
@@ -142,7 +142,7 @@ export class MatterJsComponent implements AfterViewInit {
     // fit the render viewport to the scene
     Render.lookAt(render, {
       min: { x: 0, y: 0 },
-      max: { x: 800, y: 600 },
+      max: { x: canvas.width, y: canvas.height },
     });
     render.mouse = mouse;
     // context for MatterTools.Demo
