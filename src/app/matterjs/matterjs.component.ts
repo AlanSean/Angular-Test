@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import * as Matter from 'matter-js';
 
 interface Example {
@@ -11,6 +11,7 @@ interface Example {
 })
 export class MatterJsComponent implements AfterViewInit {
   basketball = 'assets/images/matterjs/basketball.png';
+  @ViewChild('continer') continer!: ElementRef;
   constructor() {}
 
   ngAfterViewInit(): void {
@@ -33,7 +34,7 @@ export class MatterJsComponent implements AfterViewInit {
 
     // create renderer
     var render = Render.create({
-      element: document.body,
+      element: this.continer.nativeElement,
       engine: engine,
       options: {
         width: window.innerWidth,

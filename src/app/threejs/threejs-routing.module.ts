@@ -4,7 +4,7 @@ import { ThreeJsComponent } from './threejs.component';
 
 const routes: Routes = [
   {
-    path: 'three',
+    path: '',
     component: ThreeJsComponent,
   },
 ];

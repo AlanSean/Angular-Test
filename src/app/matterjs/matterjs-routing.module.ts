@@ -4,7 +4,7 @@ import { MatterJsComponent } from './matterjs.component';
 
 const routes: Routes = [
   {
-    path: 'matter',
+    path: '',
     component: MatterJsComponent,
   },
 ];
