@@ -55,5 +55,4 @@ Thumbs.db
 .npmrc
 .yarnrc
 yarn.lock
-package-lock.json
 yarn-error.log
