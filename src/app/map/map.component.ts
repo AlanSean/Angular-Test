@@ -6,7 +6,7 @@ import { load as AMapLoaderLoad } from '@amap/amap-jsapi-loader';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.less'],
+  styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
   constructor() {}

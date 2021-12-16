@@ -4,7 +4,7 @@ import { ThreeRenderer } from './utils/three';
 @Component({
   selector: 'app-three',
   templateUrl: './threejs.component.html',
-  styleUrls: ['./threejs.component.less'],
+  styleUrls: ['./threejs.component.scss'],
 })
 export class ThreeJsComponent implements AfterViewInit {
   @ViewChild('continer') continer!: ElementRef;

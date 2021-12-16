@@ -7,14 +7,14 @@ var address = `
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.less'],
+  styleUrls: ['./home.component.scss'],
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
 })
-export class HomeComponent { 
+export class HomeComponent {
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer){
 
     iconRegistry.addSvgIconLiteral('address', sanitizer.bypassSecurityTrustHtml(address));
-    
+
   }
 }

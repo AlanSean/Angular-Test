@@ -7,7 +7,7 @@ interface Example {
 @Component({
   selector: 'app-matterjs',
   templateUrl: './matterjs.component.html',
-  styleUrls: ['./matterjs.component.less'],
+  styleUrls: ['./matterjs.component.scss'],
 })
 export class MatterJsComponent implements AfterViewInit {
   basketball = 'assets/images/matterjs/basketball.png';
@@ -125,18 +125,22 @@ export class MatterJsComponent implements AfterViewInit {
         circle = newCircle;
       }
     });
+
     var mouse = Mouse.create(render.canvas),
+      ballConstraint = Constraint.create({
+        label: 'Ball Mouse Constraint',
+        pointA: mouse.position,
+        render: {
+          visible: false,
+        },
+      }),
       mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
         collisionFilter: {
           category: 8,
           mask: 8,
         },
-        constraint: {
-          render: {
-            visible: false,
-          },
-        },
+        constraint: ballConstraint,
       });
     Composite.add(world, mouseConstraint);
 
