@@ -10,7 +10,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist",
             "index": "src/index.html",
@@ -22,12 +22,9 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "customWebpackConfig": {
-              "path": "./angular.webpack.js"
-            },
             "styles": [
               "node_modules/ng-zorro-antd/style/index.min.css",
-              "src/index.scss",
+              "src/styles.scss",
               "src/styles.less"
             ],
             "scripts": []
@@ -82,7 +79,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "Angular-Test:build"
           },
@@ -105,7 +102,7 @@
           }
         },
         "test": {
-          "builder": "@angular-builders/custom-webpack:karma",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
@@ -115,11 +112,8 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "customWebpackConfig": {
-              "path": "./angular.webpack.js"
-            },
             "styles": [
-              "src/index.scss",
+              "src/styles.scss",
               "src/styles.less"
             ],
             "scripts": []
@@ -151,7 +145,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "style": "less"
+      "style": "scss"
     },
     "@schematics/angular:application": {
       "strict": true
