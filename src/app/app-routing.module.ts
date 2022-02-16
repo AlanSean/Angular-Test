@@ -20,12 +20,19 @@ const routes: Routes = [
   {
     path: 'three',
     pathMatch: 'full',
-    loadChildren: () =>  import('./threejs/threejs.module').then((m) => m.ThreeJsModule),
+    loadChildren: () =>
+      import('./threejs/threejs.module').then((m) => m.ThreeJsModule),
   },
   {
     path: 'matter',
     pathMatch: 'full',
-    loadChildren: () =>  import('./matterjs/matterjs.module').then((m) => m.MatterJsModule),
+    loadChildren: () =>
+      import('./matterjs/matterjs.module').then((m) => m.MatterJsModule),
+  },
+  {
+    path: 'pixi',
+    pathMatch: 'full',
+    loadChildren: () => import('./pixi/pixi.module').then((m) => m.PixiModule),
   },
 ];
 
